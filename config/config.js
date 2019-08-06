@@ -1,6 +1,6 @@
 module.exports = {
     host: {
-        hostname: 'http://10.1.45.111',
+        hostname: 'http://10.1.45.111' || 'http://localhost',
         port: 3000,
     },
     mongodb: {
