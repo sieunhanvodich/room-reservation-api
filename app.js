@@ -9,7 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 mongoose.connect(config.mongodb.url, {useNewUrlParser: true}, () => console.log('connected'));
-console.log(mongoose.model('users'));
+// console.log(mongoose.model('users'));
 var app = express();
 
 // view engine setup
@@ -22,7 +22,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/', (req, res) => {
+  res.send('App running');
+});
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
