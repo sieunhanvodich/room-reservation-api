@@ -7,9 +7,14 @@ var mongoose = require('mongoose');
 var config = require('./config/config');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var user = require('./models/user.model');
 
 mongoose.connect(config.mongodb.url, {useNewUrlParser: true}, () => console.log('connected'));
-// console.log(mongoose.model('users'));
+
+user.find({name: 'duong'}, function(error, user) {
+  console.log(user);
+});
+
 var app = express();
 
 // view engine setup
@@ -24,6 +29,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
   res.send('App running');
+})
+
+app.get('/info', (req, res) => {
+  user.find({name: 'duong'}, function(error, user) {
+    res.json(user);
+  });
 })
 
 app.use('/users', usersRouter);
