@@ -41,6 +41,9 @@ app.get('/', (req, res) => {
   res.send('App running');
 })
 
+app.get('/branch', (req, res) => {
+  res.send('This is branch');
+})
 app.post('/login', userController.login)
 
 app.get('/roomlist', (req, res) => res.send('This is roomlist'));
