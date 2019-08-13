@@ -4,7 +4,7 @@ module.exports = {
         port: 3000,
     },
     mongodb: {
-        url: 'mongodb://10.1.45.111/config',
+        url: 'mongodb://localhost/room-reservation',
         port: 27017
     }
 }

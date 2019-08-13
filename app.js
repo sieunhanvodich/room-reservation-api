@@ -9,14 +9,13 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var user = require('./models/user.model');
 var userController = require('./controller/user.controller');
-var cors = require('cors')
+var cors = require('cors');
+var session = require('express-session');
+var roomController = require('./controller/room.controller');
+var participantController = require('./controller/participant.controller');
 
 
 mongoose.connect(config.mongodb.url, {useNewUrlParser: true}, () => console.log('connected'));
-
-// user.find({name: 'duong'}, function(error, user) {
-//   console.log(user);
-// });
 
 var app = express();
 
@@ -46,13 +45,17 @@ app.get('/branch', (req, res) => {
 })
 app.post('/login', userController.login)
 
-app.get('/roomlist', (req, res) => res.send('This is roomlist'));
+app.get('/roomlist', roomController.getRoomList);
 app.get('/booking', (req, res) => res.send('This is booking page'));
 app.get('/info', (req, res) => {
   user.find({name: 'duong'}, function(error, user) {
     res.json(user);
   });
 })
+
+app.post('/addMember', participantController.addMember);
+
+app.post('/deleteMember', participantController.deleteMember);
 
 app.use('/users', usersRouter);
 
@@ -69,7 +72,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(err);
 });
 
 module.exports = app;

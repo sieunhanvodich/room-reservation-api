@@ -1,4 +1,5 @@
 const user = require('../models/user.model');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     info: (req, res) => {
@@ -30,5 +31,5 @@ module.exports = {
             }
 
         })
-    }
+    },
 };
