@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var user = require('./models/user.model');
 var userController = require('./controller/user.controller');
+var bookingController = require('./controller/booking.controller');
 var cors = require('cors')
 const auth = require('./auth/auth')
 
@@ -45,7 +46,7 @@ app.get('/', auth, (req, res) => {
 
 app.post('/login', userController.login)
 app.get('/roomlist', (req, res) => res.send('This is roomlist'));
-app.get('/booking', (req, res) => res.send('This is booking page'));
+app.post('/booking', bookingController.booking);
 app.get('/info', userController.info)
 app.use('/users', usersRouter);
 
