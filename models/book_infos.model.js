@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId
 
 const book_infosSchema = new mongoose.Schema({
     room_id: {
-        type: String,
+        type: ObjectId,
         required: true,
     },
     host_id: {
-        type: String,
+        type: ObjectId,
         required: true,
     },
     book_type_id: {
-        type: String,
+        type: ObjectId,
         required: true,
     },
     meeting_name: {
