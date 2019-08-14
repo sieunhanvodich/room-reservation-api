@@ -1,4 +1,4 @@
-const User = require('../models/user.model');
+const User = require('../models/user.model')
 
 module.exports = {
     info: (req, res) => {
@@ -15,6 +15,7 @@ module.exports = {
                 res.json({ status: "Error 1" })
                 // return res.status(401).send({ error: 'Login failed! Check authentication credentials' })
             }
+            const role = await User.findOne({ _id: user }).exec()
             const token = user.generateAuthToken()
             res.send({ user, token })
         } catch (error) {

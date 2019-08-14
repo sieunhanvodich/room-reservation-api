@@ -2,12 +2,22 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-
+const ObjectId = mongoose.Types.ObjectId
 const SECRET_KEY = 'asterix-needs-permit-a-38';
 
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
+        required: true,
+        trim: true,
+    },
+    role_id:{
+        type: ObjectId,
+        required: true,
+        trim: true,
+    },
+    department_id:{
+        type: ObjectId,
         required: true,
         trim: true,
     },
