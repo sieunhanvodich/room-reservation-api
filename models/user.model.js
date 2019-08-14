@@ -2,12 +2,22 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-
+const ObjectId = mongoose.Types.ObjectId
 const SECRET_KEY = 'asterix-needs-permit-a-38';
 
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
+        required: true,
+        trim: true,
+    },
+    role_id:{
+        type: ObjectId,
+        required: true,
+        trim: true,
+    },
+    department_id:{
+        type: ObjectId,
         required: true,
         trim: true,
     },
@@ -53,7 +63,6 @@ userSchema.pre('save', async function (next) {
 
 userSchema.statics.hashhhh = bcrypt.hash('1234567', 10).then(function (hash) {
     // Store hash in your password DB.
-    // console.log("Mk " +hash)
 });
 
 userSchema.methods.generateAuthToken = function () {
@@ -66,13 +75,12 @@ userSchema.methods.generateAuthToken = function () {
 userSchema.statics.findByCredentials = async (email, password) => {
     // Search for a user by email and password.
     const user = await User.findOne({ email: email }).exec()
-    console.log("user " + user)
     if (!user) {
-        throw new Error('Invalid login credentials')
+        throw new Error('Invalid user!')
     }
     const isPasswordMatch = await bcrypt.compare(password, user.password)
     if (!isPasswordMatch) {
-        throw new Error('Invalid login credentials')
+        throw new Error('Invalid user or password!')
     }
     return user
 }
