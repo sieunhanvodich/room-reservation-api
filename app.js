@@ -10,13 +10,10 @@ var usersRouter = require('./routes/users');
 var user = require('./models/user.model');
 var userController = require('./controller/user.controller');
 var cors = require('cors')
+const auth = require('./auth/auth')
 
-
+// connect to mongodb
 mongoose.connect(config.mongodb.url, {useNewUrlParser: true}, () => console.log('connected'));
-
-// user.find({name: 'duong'}, function(error, user) {
-//   console.log(user);
-// });
 
 var app = express();
 
@@ -37,20 +34,19 @@ app.use(cors());
 //   next();
 // });
 
-app.get('/', (req, res) => {
-  res.send('App running');
+app.get('/', auth, (req, res) => {
+  try {
+    // console.log('req', req.token)
+    res.json({success: 'ok'});
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 app.post('/login', userController.login)
-
 app.get('/roomlist', (req, res) => res.send('This is roomlist'));
 app.get('/booking', (req, res) => res.send('This is booking page'));
-app.get('/info', (req, res) => {
-  user.find({name: 'duong'}, function(error, user) {
-    res.json(user);
-  });
-})
-
+app.get('/info', userController.info)
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
