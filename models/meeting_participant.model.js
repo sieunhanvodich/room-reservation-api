@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
+const ObjectID = mongoose.Types.ObjectID;
 
 const meeting_participantSchema = new mongoose.Schema({
     user_id: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
     meeting_id: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
     updated_at: {

@@ -13,7 +13,9 @@ var cors = require('cors');
 var session = require('express-session');
 var roomController = require('./controller/room.controller');
 var participantController = require('./controller/participant.controller');
-
+var cors = require('cors')
+const auth = require('./auth/auth');
+const bookingController = require('./controller/booking.controller');
 
 mongoose.connect(config.mongodb.url, {useNewUrlParser: true}, () => console.log('connected'));
 
@@ -36,10 +38,14 @@ app.use(cors());
 //   next();
 // });
 
-app.get('/', (req, res) => {
-  res.send('App running');
+app.get('/', auth, (req, res) => {
+  try {
+    // console.log('req', req.token)
+    res.json({success: 'ok'});
+  } catch (err) {
+    console.log(err)
+  }
 })
-
 app.get('/branch', (req, res) => {
   res.send('This is branch');
 })
@@ -57,8 +63,12 @@ app.post('/addMember', participantController.addMember);
 
 app.post('/deleteMember', participantController.deleteMember);
 
+app.get('/roomlist', (req, res) => res.send('This is roomlist'));
+app.get('/booking', (req, res) => res.send('This is booking page'));
+app.get('/info', userController.info)
 app.use('/users', usersRouter);
 
+app.get('/deleteBooking', bookingController.deleteBooking);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
