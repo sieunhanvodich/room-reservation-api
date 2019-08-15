@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
-
+let ObjectId = mongoose.Types.ObjectId;
 const book_infosSchema = new mongoose.Schema({
     room_id: {
-        type: String,
+        type: ObjectId,
         required: true,
     },
     host_id: {
-        type: String,
+        type: ObjectId,
         required: true,
     },
     book_type_id: {
-        type: String,
+        type: ObjectId,
         required: true,
     },
     name: {
@@ -32,7 +32,8 @@ const book_infosSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         required: true,
-    }
+    },
+    
 });
 
 module.exports = mongoose.model('book_infos', book_infosSchema);

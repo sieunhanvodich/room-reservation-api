@@ -7,13 +7,6 @@ module.exports = {
         });
     },
     login: (req, res) => {
-        // let username = 'duong.nguyentung@vti.com.vn';
-        // let password = '1234567';
-        // if (username == 'duong.nguyentung@vti.com.vn' && password == password) {
-        //     res.json({
-        //         a: 1,
-        //     })
-        // }
         user.find({email: req.body.username}, (error, user) => {
             if (error) {
                 console.log(error);
@@ -31,4 +24,5 @@ module.exports = {
 
         })
     }
+
 };
