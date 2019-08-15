@@ -8,10 +8,10 @@ var config = require('./config/config');
 var indexRouter = require('./routes/index');
 var userController = require('./controller/user.controller');
 var cors = require('cors')
+const auth = require('./auth/auth')
 
+// connect to mongodb
 mongoose.connect(config.mongodb.url, {useNewUrlParser: true}, () => console.log('connected'));
-
-
 
 var app = express();
 
@@ -28,12 +28,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 
-app.get('/', (req, res) => {
-  res.send('App running');
+app.get('/', auth, (req, res) => {
+  try {
+    // console.log('req', req.token)
+    res.json({success: 'ok'});
+  } catch (err) {
+    console.log(err)
+  }
 })
 
 app.post('/login', userController.login)
-
 app.get('/roomlist', (req, res) => res.send('This is roomlist'));
 app.get('/booking', (req, res) => res.send('This is booking page'));
 
