@@ -4,10 +4,10 @@ const roomSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        trim: true,
     },
     capacity: {
-        type: String
+        type: String,
+        required: true
     },
     updated_at: {
         type: Date,

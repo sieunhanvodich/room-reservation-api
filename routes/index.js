@@ -7,7 +7,8 @@ router.get('/', function(req,res) {
   });
 });
 
-router.route('/home').get(homeController.getAll);
+router.route('/get-data-bookinfros').get(homeController.getAll);
+
 
 
 /* GET home page. */

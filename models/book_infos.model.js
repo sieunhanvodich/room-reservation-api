@@ -33,6 +33,10 @@ const book_infosSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
+    until : {
+        type: Date,
+        required: true
+    } 
     
 });
 

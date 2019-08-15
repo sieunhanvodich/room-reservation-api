@@ -30,7 +30,7 @@ app.use(cors());
 
 app.get('/', auth, (req, res) => {
   try {
-    // console.log('req', req.token)
+    
     res.json({success: 'ok'});
   } catch (err) {
     console.log(err)
