@@ -14,10 +14,12 @@ module.exports = {
                 description: req.body.description,
                 invited:req.body.invited,
                 until: req.body.until,
-                created_at: "8/13/2019 10:15"
+                created_at: new Date(),
+                updated_at: null
                 }
             )
-            console.log(bookInfo)
+            bookInfo.save()
+            res.json({message: "Success"})
         } catch (error) {
             // res.status(400).send(error)
             res.json({ error: "error" })
