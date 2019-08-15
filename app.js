@@ -10,13 +10,11 @@ var usersRouter = require('./routes/users');
 var user = require('./models/user.model');
 var userController = require('./controller/user.controller');
 var cors = require('cors')
+var roomController = require('./controller/room.controller');
 
 
 mongoose.connect(config.mongodb.url, {useNewUrlParser: true}, () => console.log('connected'));
 
-// user.find({name: 'duong'}, function(error, user) {
-//   console.log(user);
-// });
 
 var app = express();
 
@@ -31,11 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors());
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+
 
 app.get('/', (req, res) => {
   res.send('App running');
@@ -43,7 +37,7 @@ app.get('/', (req, res) => {
 
 app.post('/login', userController.login)
 
-app.get('/roomlist', (req, res) => res.send('This is roomlist'));
+app.get('/roomlist', roomController.getRoomList);
 app.get('/booking', (req, res) => res.send('This is booking page'));
 app.get('/info', (req, res) => {
   user.find({name: 'duong'}, function(error, user) {

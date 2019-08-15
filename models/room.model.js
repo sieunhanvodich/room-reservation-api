@@ -1,13 +1,19 @@
 const mongoose = require('mongoose');
+const schema = mongoose.Schema;
 
 const roomSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        trim: true,
+        required: true,     
+    },
+    image: {
+        type: String,
+    },
+    position: {
+        type: String,
     },
     capacity: {
-        type: String
+        type: String,
     },
     updated_at: {
         type: Date,
@@ -15,7 +21,14 @@ const roomSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         required: true,
+    },
+    description: {
+        type: String,
     }
 });
 
+// const schema = new Schema({
+
+// })
+// }
 module.exports = mongoose.model('room', roomSchema);
