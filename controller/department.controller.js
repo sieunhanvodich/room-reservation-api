@@ -1,9 +1,9 @@
-const Room = require('../models/room.model')
+const Department = require('../models/department.model');
 
 module.exports = {
-    listRooms: async (req, res) => {
+    listDepartments: async (req, res) => {
         try {
-            await Room.find({}, function(err, rooms) {
+            await Department.find({}, function(err, rooms) {
                 res.send(rooms)
               })
         } catch (error) {

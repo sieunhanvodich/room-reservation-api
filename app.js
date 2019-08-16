@@ -9,6 +9,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var user = require('./models/user.model');
 var userController = require('./controller/user.controller');
+var departmentController = require('./controller/department.controller');
+var roomController = require('./controller/room.controller');
 var bookingController = require('./controller/booking.controller');
 var cors = require('cors')
 const auth = require('./auth/auth')
@@ -44,11 +46,15 @@ app.get('/', auth, (req, res) => {
   }
 })
 
-app.post('/login', userController.login)
-app.get('/roomlist', (req, res) => res.send('This is roomlist'));
+app.post('/login', userController.login);
 app.post('/booking', bookingController.booking);
-app.get('/info', userController.info)
-app.use('/users', usersRouter);
+app.get('/info', userController.info);
+app.get('/users', userController.listUsers);
+app.get('/departments', departmentController.listDepartments);
+app.get('/rooms', roomController.listRooms);
+
+// app.use('/users', usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

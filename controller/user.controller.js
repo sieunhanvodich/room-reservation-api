@@ -17,5 +17,15 @@ module.exports = {
             // res.status(400).send(error)
             res.json(error.message)
         }
+    },
+    listUsers: async (req, res) => {
+        try {
+            await User.find({}, function(err, users) {
+                res.send(users)
+              });
+        } catch (error) {
+            // res.status(400).send(error)
+            res.json(error.message)
+        }
     }
 };
