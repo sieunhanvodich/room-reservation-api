@@ -41,7 +41,6 @@ app.get('/', auth, (req, res) => {
 })
 
 app.post('/login', userController.login)
-
 app.get('/roomlist', roomController.getRoomList);
 app.get('/booking', (req, res) => res.send('This is booking page'));
 app.get('/info', userController.info)

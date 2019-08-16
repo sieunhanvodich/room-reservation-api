@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const schema = mongoose.Schema;
+
 
 const roomSchema = new mongoose.Schema({
     name: {
@@ -27,8 +27,4 @@ const roomSchema = new mongoose.Schema({
     }
 });
 
-// const schema = new Schema({
-
-// })
-// }
-module.exports = mongoose.model('room', roomSchema);
+module.exports = mongoose.model('rooms', roomSchema);
