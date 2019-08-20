@@ -17,26 +17,13 @@ module.exports = {
                
          }
        console.log(bookTypeName)
-    // let bookInfos = bookInfo.find({}).populate('book_type').exec(function(error, posts) {
-    //         console.log('post', JSON.stringify(posts, null, "\t"))
-    //     });
+   
         res.json({
             roomList: roomList,
             bookInfos: bookInfos,
             bookTypeName: bookTypeName
         })
-    //     room.find({}, function (err, rooms) {
-    //         let info = rooms.map(room => ({
-
-    //             name: room.name,
-    //             position: room.position,
-    //             capacity: room.capacity,
-    //             description: room.description
-    //         }))
-            
-    //         res.json({ rooms });
-    //     })
-        
+    
    },   
 }
 

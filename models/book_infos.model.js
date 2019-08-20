@@ -13,11 +13,7 @@ const book_infosSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
-    // book_type: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'book_types'
-    // },
-
+   
     name: {
         type: String,
         required: true,
