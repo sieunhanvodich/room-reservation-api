@@ -2,16 +2,19 @@ const mongoose = require('mongoose');
 
 const book_infosSchema = new mongoose.Schema({
     room_id: {
-        type: String,
+        type: mongoose.Types.ObjectId,
         required: true,
+        ref: 'room'
     },
     host_id: {
-        type: String,
+        type: mongoose.Types.ObjectId,
         required: true,
+        ref: 'User'
     },
     book_type_id: {
-        type: String,
+        type: mongoose.Types.ObjectId,
         required: true,
+        ref: 'book_types'
     },
     name: {
         type: String,

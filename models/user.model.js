@@ -11,15 +11,17 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    role_id:{
+    role:{
         type: ObjectId,
         required: true,
         trim: true,
+        ref: 'role'
     },
     department_id:{
         type: ObjectId,
         required: true,
         trim: true,
+        ref: 'department'
     },
     email: {
         type: String,

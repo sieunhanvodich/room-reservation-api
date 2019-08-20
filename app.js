@@ -16,6 +16,7 @@ var participantController = require('./controller/participant.controller');
 var cors = require('cors')
 const auth = require('./auth/auth');
 const bookingController = require('./controller/booking.controller');
+const homeController = require('./controller/home.controller');
 
 mongoose.connect(config.mongodb.url, {useNewUrlParser: true}, () => console.log('connected'));
 
@@ -66,6 +67,9 @@ app.post('/deleteMember', participantController.deleteMember);
 app.get('/roomlist', (req, res) => res.send('This is roomlist'));
 app.get('/booking', (req, res) => res.send('This is booking page'));
 app.get('/info', userController.info)
+
+app.get('/home1', homeController.getHomeContent);
+// app.get('/home1', (req, res) => json({duong: 'deptraoi'}));
 app.use('/users', usersRouter);
 
 app.get('/deleteBooking', bookingController.deleteBooking);
