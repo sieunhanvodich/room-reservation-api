@@ -4,6 +4,7 @@ const book_infosSchema = new mongoose.Schema({
     room_id: {
         type: ObjectId,
         required: true,
+        ref: 'room'
     },
     host_id: {
         type: ObjectId,
