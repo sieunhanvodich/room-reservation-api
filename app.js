@@ -6,8 +6,6 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var config = require('./config/config');
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var user = require('./models/user.model');
 var userController = require('./controller/user.controller');
 var cors = require('cors')
 const auth = require('./auth/auth')
@@ -28,15 +26,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors());
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+
 
 app.get('/', auth, (req, res) => {
   try {
-    // console.log('req', req.token)
+    
     res.json({success: 'ok'});
   } catch (err) {
     console.log(err)
@@ -46,8 +40,11 @@ app.get('/', auth, (req, res) => {
 app.post('/login', userController.login)
 app.get('/roomlist', (req, res) => res.send('This is roomlist'));
 app.get('/booking', (req, res) => res.send('This is booking page'));
-app.get('/info', userController.info)
-app.use('/users', usersRouter);
+
+
+
+
+app.use('/api',indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

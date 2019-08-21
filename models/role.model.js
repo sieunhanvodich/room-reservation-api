@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Schema = mongoose.Schema;
 const roleSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -12,7 +12,8 @@ const roleSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         required: true,
-    }
+    },
+
 });
 
 module.exports = mongoose.model('role', roleSchema);
