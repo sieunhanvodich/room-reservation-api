@@ -4,6 +4,7 @@ const book_infosSchema = new mongoose.Schema({
     room_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: 'rooms'
     },
     host_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -12,6 +13,7 @@ const book_infosSchema = new mongoose.Schema({
     book_type_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: 'book_types',
     },
    
     name: {
