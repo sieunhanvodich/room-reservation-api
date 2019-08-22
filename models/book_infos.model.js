@@ -14,6 +14,10 @@ const book_infosSchema = new mongoose.Schema({
         type: ObjectId,
         required: true,
     },
+    // department_id:{
+    //     type: ObjectId,
+    //     required: true,
+    // },
     meeting_name: {
         type: String,
         required: true,

@@ -7,6 +7,7 @@ module.exports = {
         });
     },
     login: async (req, res) => {
+        console.log(req.body);
         try {
             const email = req.body.username
             const password = req.body.password

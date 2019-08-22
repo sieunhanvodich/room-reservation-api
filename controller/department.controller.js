@@ -1,11 +1,12 @@
 const Department = require('../models/department.model');
 
 module.exports = {
-    listDepartments: async (req, res) => {
+    listDepartments: (req, res) => {
         try {
-            await Department.find({}, function(err, rooms) {
-                res.send(rooms)
-              })
+            Department.findById({_id: '5d490435df293ac6ec0b9970'}, (err, departments) => {
+                if (err) throw err
+                res.json({message:"Success"})
+            })
         } catch (error) {
             // res.status(400).send(error)
             res.json(error.message)
