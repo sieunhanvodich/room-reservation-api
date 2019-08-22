@@ -35,7 +35,13 @@ const book_infosSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         required: true,
-    }
+    },
+    invited: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 });
 
 module.exports = mongoose.model('book_infos', book_infosSchema);

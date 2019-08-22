@@ -1,18 +1,19 @@
 const bookInfoModel = require('../models/book_infos.model');
 const roleModel = require('../models/role.model');
+const roomModel = require('../models/room.model');
 const userModel = require('../models/user.model');
 const bookTypesModel = require('../models/book_types.model');
 const memberModel = require('../models/meeting_participant.model');
 const moment = require('moment');
 
 const filterMeetingByBookType = (meeting, timeSelected) => {
-    let isInUntil = false;
-    let untilMilisecond = moment(meeting.until).valueOf();
-    let timeSelectedMilisecond = timeSelected.getTime();
-    if (timeSelectedMilisecond <= untilMilisecond) {
-        isInUntil = true;
-    }
-    if (isInUntil) {
+    // let isInUntil = false;
+    // let untilMilisecond = moment(meeting.until).valueOf();
+    // let timeSelectedMilisecond = timeSelected.getTime();
+    // if (timeSelectedMilisecond <= untilMilisecond) {
+    //     isInUntil = true;
+    // }
+    // if (isInUntil) {
         switch (meeting.book_type_id.name) {
             case 'daily':
                 return isInUntil;
@@ -40,7 +41,7 @@ const filterMeetingByBookType = (meeting, timeSelected) => {
             default:
                 break;
         };
-    }
+    // }
     
     return false;
 };
@@ -61,16 +62,30 @@ module.exports = {
         // const timeSelected = new Date('Mon Aug 19 2019 14:42:50 GMT+0700 (Indochina Time)');
 
         //testing monthly
-        const timeSelected = new Date('Sun Aug 18 2019 14:42:50 GMT+0700 (Indochina Time)');
+        const timeSelected = '2019-08-18T07:42:50.000Z';
 
         let userInfo = await userModel.findById({_id: userId}).populate('role');
+        // console.log(userInfo);
         let ownMeetingInTimeSelected = [];
         let intitedMeetingInTimeSelected = [];
 
         if (userInfo.role.name == 'CEO' || userInfo.role.name == 'Manager') {
              //filter own meeting
-            let allOwnMeeting = await bookInfoModel.find({host_id: userId}).populate('book_type_id');
-            // console.log(allMeetingJoined);
+            console.log(timeSelected);
+            let allOwnMeeting = await bookInfoModel.find({
+                host_id: userId,
+                until: { $gte: timeSelected},
+            }).populate('invited').map(meeting => meeting.invited.map(member => {console.log(member); return member}));
+            // .populate({
+            //     path: 'book_type_id',
+            //     model: 'book_types',
+            //     match: {
+            //         name: {
+            //             $cond: {if: }
+            //         }
+            //     }
+            // })
+            console.log(allOwnMeeting);
             ownMeetingInTimeSelected = allOwnMeeting.filter((meeting) => filterMeetingByBookType(meeting, timeSelected));
             // console.log(ownMeetingInTimeSelected);
         };
@@ -78,16 +93,31 @@ module.exports = {
         //filter intited meeting
         let allInvitedMeeting = (await memberModel.find({user_id: userId}).populate({
             path: 'meeting_id',
-            populate: {
-                path: 'book_type_id',
-                model: 'book_types'
-            }
-        })).map(meeting => meeting.meeting_id);
-        console.log(allInvitedMeeting);
+            model: 'book_infos',
+            populate: [
+                {
+                    path: 'room_id',
+                    model: 'room',
+                    select: ['_id', 'name', 'capacity']
+                },
+                {
+                    path: 'host_id',
+                    model: 'User',
+                    select: ['_id', 'name', 'email']
+                },
+                {
+                    path: 'book_type_id',
+                    model: 'book_types',
+                },
+            ],
+            select: ['_id', 'room_id', 'book_type_id', 'host_id', 'until', 'requirement', 'description', 'from', 'to']
+        }).select(['_id', 'meeting_id'])).map(meeting => meeting.meeting_id);
+        // console.log(allInvitedMeeting);
 
         intitedMeetingInTimeSelected = allInvitedMeeting.filter(meeting => filterMeetingByBookType(meeting, timeSelected));
-        console.log(intitedMeetingInTimeSelected);
+        // console.log(intitedMeetingInTimeSelected);
         res.json({
+            // allInvitedMeeting,
             ownMeetingInTimeSelected,
             intitedMeetingInTimeSelected
         })
