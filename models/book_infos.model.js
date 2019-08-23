@@ -36,12 +36,7 @@ const book_infosSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    invited: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ]
-});
+    invited: [{type: mongoose.Schema.Types.ObjectId, ref: 'meeting_participant'}]
+}, {collection: 'book_infos'});
 
 module.exports = mongoose.model('book_infos', book_infosSchema);

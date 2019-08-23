@@ -3,7 +3,7 @@ const ObjectID = mongoose.Types.ObjectID;
 
 const meeting_participantSchema = new mongoose.Schema({
     user_id: {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
     },

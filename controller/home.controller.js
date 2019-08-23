@@ -16,7 +16,7 @@ const filterMeetingByBookType = (meeting, timeSelected) => {
     // if (isInUntil) {
         switch (meeting.book_type_id.name) {
             case 'daily':
-                return isInUntil;
+                return true;
             case 'weekly':
                 let dayOfWeek = moment(meeting.from).format('ddd');
                 let curDayOfWeek = moment(timeSelected).format('ddd');
@@ -75,7 +75,34 @@ module.exports = {
             let allOwnMeeting = await bookInfoModel.find({
                 host_id: userId,
                 until: { $gte: timeSelected},
-            }).populate('invited').map(meeting => meeting.invited.map(member => {console.log(member); return member}));
+            }).populate([
+                {
+                    path: 'book_type_id',
+                    model: 'book_types'
+                },
+                {
+                    path: 'host_id',
+                    model: 'User',
+                    select: ['_id', 'name', 'email']
+                },
+                {
+                    path: 'room_id',
+                    model: 'room',
+                    select: ['_id', 'name', 'capacity']
+                },
+                {
+                    path: 'invited',
+                    populate: {
+                        path: 'user',
+                        model: 'meeting_participant',
+                    },
+                    populate: {
+                        path: 'user_id',
+                        model: 'User',
+                        select: ['name', 'email', 'phone']
+                    }
+                }
+            ])
             // .populate({
             //     path: 'book_type_id',
             //     model: 'book_types',
@@ -85,9 +112,9 @@ module.exports = {
             //         }
             //     }
             // })
-            console.log(allOwnMeeting);
+            // console.log(allOwnMeeting);
             ownMeetingInTimeSelected = allOwnMeeting.filter((meeting) => filterMeetingByBookType(meeting, timeSelected));
-            // console.log(ownMeetingInTimeSelected);
+            console.log(ownMeetingInTimeSelected);
         };
 
         //filter intited meeting
@@ -110,9 +137,9 @@ module.exports = {
                     model: 'book_types',
                 },
             ],
-            select: ['_id', 'room_id', 'book_type_id', 'host_id', 'until', 'requirement', 'description', 'from', 'to']
+            select: ['_id', 'room_id', 'book_type_id', 'host_id', 'until', 'requirement', 'description', 'from', 'to', 'name']
         }).select(['_id', 'meeting_id'])).map(meeting => meeting.meeting_id);
-        // console.log(allInvitedMeeting);
+        console.log(allInvitedMeeting);
 
         intitedMeetingInTimeSelected = allInvitedMeeting.filter(meeting => filterMeetingByBookType(meeting, timeSelected));
         // console.log(intitedMeetingInTimeSelected);
