@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Schema = mongoose.Schema;
 const roomSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -10,10 +10,10 @@ const roomSchema = new mongoose.Schema({
         required: true
     },
     updated_at: {
-        type: Date,
+        type: String,
     },
     created_at: {
-        type: Date,
+        type: String,
         required: true,
     }
 });

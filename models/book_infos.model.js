@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 let ObjectId = mongoose.Types.ObjectId;
+const Schema = mongoose.Schema;
 const book_infosSchema = new mongoose.Schema({
-    room_id: {
-        type: ObjectId,
-        required: true,
-        ref: 'room'
-    },
     host_id: {
         type: ObjectId,
         required: true,
@@ -14,7 +10,7 @@ const book_infosSchema = new mongoose.Schema({
         type: ObjectId,
         required: true,
     },
-    name: {
+    meeting_name: {
         type: String,
         required: true,
         trim: true,
@@ -27,17 +23,15 @@ const book_infosSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    updated_at: {
-        type: Date,
-    },
-    created_at: {
-        type: Date,
-        required: true,
-    },
     until : {
         type: Date,
         required: true
-    } 
+    },
+    room_id: {
+        type: ObjectId,
+        required: true,
+        ref: 'room'
+    }
     
 });
 
